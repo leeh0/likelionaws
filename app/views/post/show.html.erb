@@ -1,0 +1,56 @@
+<div class="container">
+    <h1><%= @post.title %></h1><hr/>
+    
+    <div style="text-align:right;">
+        <div><%= @post.created_at.to_s.split("+").first %>, <%= time_ago_in_words(@post.created_at) %> ago</div>
+        <div><%= @post.user.username %></div>
+        <a href="/post/edit/<%= @post.id %>" class="badge badge-light">수정</a>
+        <a href="/post/destroy/<%= @post.id %>" class="badge badge-secondary">삭제</a>
+        
+        <div><%=@post.liked_users.size %>명이 좋아합니다</div>
+        <% if current_user.is_like?(@post) %>
+            <div><a href="/likes/likes_toggle/<%= @post.id %>">좋아요 취소</a></div>
+            <%= link_to "좋아요 취소", likes_likes_toggle_path(@post), method: "post" %>
+        <% else %>
+            <div><a href="/likes/likes_toggle/<%= @post.id %>">좋아요</a></div>
+            <%= link_to "좋아요", likes_likes_toggle_path(@post), method: "post" %>
+        <% end %>
+        
+    </div>
+    
+    <p><%= simple_format(@post.content) %></p> 
+    
+    
+    
+    <p>
+        <% unless @post.image.nil? %>
+            <%= image_tag @post.image %>
+            <%= image_tag @post.thumb %>
+            <%= image_tag @post.middle %>
+        <% end %>
+    </p>
+    
+
+    
+    <hr>
+    
+    <div class="container">
+        <% @post.replies.each do |r| %>
+             <%= r.user.username %> : <%= r.content %>
+             <div style="text-align:right;">
+                 <%= r.created_at.to_s.split("+").first %>
+                 <a href="/reply/destroy/<%= r.id %>" class="badge badge-secondary">삭제</a>
+             </div>
+             <hr>
+        <% end %>
+    </div>
+    
+    
+    <form action="/reply/create" method="post">
+        <input name="post_id" value="<%= @post.id %>" hidden="true">
+        <div class="row">
+            <textarea name="content" class="form-control col-11" id="exampleFormControlTextarea1" rows="3"></textarea>
+          <button type="submit" class="btn btn-light clo-1">댓글 작성</button>
+        </div>
+    </form>
+</div>
