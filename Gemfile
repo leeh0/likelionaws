@@ -44,6 +44,8 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
   gem 'sqlite3'
+  gem 'rails_db'
+  gem 'hirb' #콘솔로 보기좋게 해주는거. 킬때마다 enable 해줘야함
 end
 
 group :development do
