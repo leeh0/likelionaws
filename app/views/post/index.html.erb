@@ -28,4 +28,110 @@
         <button type="button" class="btn btn-secondary">글쓰기</button>
     </a>
     
+
+  <% @post.each do |p| %>
+  <div class="card" style="width: 18rem;">
+    <img class="card-img-top" src="http://img.etoday.co.kr/pto_db/2017/10/20171013111643_1136521_710_340.jpg" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title"><a href="/post/show/<%=p.id%>"><%= p.title %></a></h5>
+      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      <a href="#" class="btn btn-primary"><%= p.user.username %></a>
+      <div>
+        <%= p.created_at %>
+      </div>
+    </div>
+  </div>
+  <% end %>
+
+  <div id="enters"></div>
 </div>
+
+<script
+  src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous">
+</script>
+  
+  
+<script>
+
+  var count =4;
+  var stringTemp = "";
+  
+  function call(){
+         $.ajax({
+            type:"get",
+            url:"/post/ajaxCall",
+            data : {'count' : count},
+            dataType : "jason",
+            success: function(data){
+              
+                alert(data["title"]);
+            },
+            error: function(xhr, status, error) {
+                alert(error);
+            }  
+        });
+
+  }
+
+
+  var page = 1;
+
+$(window).scroll(function() {
+    if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+      /*page++;
+      $("#enters").append("<h1>Page<h1> " + page );*/
+      call();
+      
+    }
+});
+</script>
+
+
+<!--<button onclick="hi_1()">안녕</button>
+<button onclick="hi_2('준우','z','a')">바이</button>
+
+
+
+<input id="id1"></input>
+<button onclick="add1()">+</button>  
+<input id="id2"></input>
+=
+<input id="id3"></input>
+
+
+<br/>
+<span>1</span>
+<button onclick="add2(<%#= 1%>,<%#= 2%>)">+</button>
+<span>2</span>
+=
+<input id="add"></input>
+
+
+<script>
+   function hi_1(){
+       var A = "hi";
+       alert(A + "Hi!");
+   }
+   
+   function hi_2(_value,h,k){
+       alert(_value + h + k + "바이");
+   }   
+   
+   
+   function add1(){
+      var A = document.getElementById("id1").value;
+      var B = document.getElementById("id2").value;
+      var C = Number(A) + Number(B);
+      alert(C);
+      document.getElementById("id3").value = C;
+   }
+   
+   
+   function add2(value1,value2){
+       document.getElementById("add").value = (value1 + value2);
+   }   
+      
+      
+</script>-->

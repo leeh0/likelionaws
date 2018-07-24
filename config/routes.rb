@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
+  
+  # 에이젝스 통신
+  get 'post/ajaxCall' => 'post#ajaxCall'
+  
   devise_for :users
+  
+  
+  
   get 'reply/create'
   post 'reply/create'
 

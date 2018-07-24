@@ -1,6 +1,18 @@
 class PostController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show, :destroy] #only
   
+  def ajaxCall
+    count = params[:count].to_i
+    @item = Post.all.at(count)
+    @return_Value = {"id" => @item.id,
+      "user" => @item.user_id,
+      "title" => @item.title,
+      "time" => @item.created_at,
+    }
+    render json: @return_Value
+  end
+  
+  
   def index
     @post= Post.all.reverse
     @posts = Post.order("created_at DESC").page(params[:page])
